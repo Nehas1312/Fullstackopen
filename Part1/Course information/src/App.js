@@ -1,54 +1,28 @@
 import React from 'react'
 
 const App = () => {
-  
-  const exercises1 = 10
-  
-  const exercises2 = 7
-  
-  const exercises3 = 14
-const Header = (props) =>{
-  return(
-    <div>
-      <h1>
-         {props.course}
-      </h1>
-    </div>
-  )
-}  
-const Part =(props) =>{
-  return(
-    <div>
-      <p>{props.part}, Number of excersises is {props.ex}</p>
-    </div>
-  )
-}
-const Content = ()=>{
-  return(
-    <div>
-    <Part part ='Fundamentals of React' ex = '10' />
-    <Part part = 'Using props to pass data' ex='7'/>
-    <Part part= 'Using props to pass data' ex='7'/>
-     <Part part ='State of a component' ex='14'/>
-     </div>
-  )
-}
-const Total = (props)=>{
-  return(
-    <div>
-      <p>
-        Total number of excersises = {props.total}
-      </p>
-    </div>
-  )
-}
+  const course = 'Half Stack application development'
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
+  ]
+  const val = parts.map(part => <p> {part.name} - {part.exercises} </p>  )
+  console.log(val)
   return (
     <div>
-      <Header course='Half Stack application development' />
-       
-      <Content/> 
-     
-      <Total total ={exercises1+exercises2+exercises3} />
+      <h1> {course}</h1>
+       {val} 
+      
     </div>
   )
 }

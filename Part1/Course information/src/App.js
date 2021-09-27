@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 const StatisticLine =(props) =>{
   return( 
     <div>
-      <td> {props.text}  = {props.value} </td>
+      <td> {props.text}  = {props.value} {props.children} </td>
    </div>
   )}
 
@@ -19,7 +19,7 @@ const Statistics = (props) => {
   }
   else {return (
     <div>
-      <h2> Statistics</h2>
+      <h2> Statistics</h2>  
       {/* <li>Good = {props.val1}</li>
       <li>Netural = {props.val2}</li>
       <li>Bad = {props.val3}</li>
@@ -31,7 +31,7 @@ const Statistics = (props) => {
       <StatisticLine text="Bad" value ={props.val3} />
       <StatisticLine text="All" value ={props.val4} />
       <StatisticLine text="Average" value ={(props.val1- props.val3)/props.val4} />
-      <StatisticLine text="Positive Feedback" value = {props.val1/props.val4 * 100  }  />
+      <StatisticLine text="Positive Feedback"  value = {props.val1/props.val4 * 100}  > % </StatisticLine>
     </div>
   )
 }

@@ -30,8 +30,8 @@ const Statistics = (props) => {
       <StatisticLine text="Neutral" value ={props.val2} />
       <StatisticLine text="Bad" value ={props.val3} />
       <StatisticLine text="All" value ={props.val4} />
-      <StatisticLine text="Average" value ={(props.val1- props.val3)/props.val4} />
-      <StatisticLine text="Positive Feedback"  value = {props.val1/props.val4 * 100}  > % </StatisticLine>
+      <StatisticLine text="Average" value ={((props.val1- props.val3)/props.val4).toFixed(2)} />
+      <StatisticLine text="Positive Feedback"  value = {(props.val1/props.val4 * 100).toFixed(2)}  > % </StatisticLine>
     </div>
   )
 }

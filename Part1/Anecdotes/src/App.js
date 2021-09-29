@@ -15,23 +15,23 @@ const App = () => {
   
 
   const copy = [...vote]
-   function indexOfMax(arr) {
-    if (arr.length === 0) {
-        return -1;
-    }
+//    function indexOfMax(arr) {
+//     if (arr.length === 0) {
+//         return -1;
+//     }
 
-    var max = arr[0];
-    var maxIndex = 0;
+//     var max = arr[0];
+//     var maxIndex = 0;
 
-    for (var i = 1; i < arr.length; i++) {
-        if (arr[i] > max) {
-            maxIndex = i;
-            max = arr[i];
-        }
-    }
+//     for (var i = 1; i < arr.length; i++) {
+//         if (arr[i] > max) {
+//             maxIndex = i;
+//             max = arr[i];
+//         }
+//     }
 
-    return maxIndex;
-}
+//     return maxIndex;
+// }
    
 
  const [selected, setSelected] = useState(0)
@@ -49,8 +49,8 @@ const App = () => {
         <button onClick ={ () => setSelected(getRandomInt(7))}> Next anecdotes</button>
        </p>
        <h2> Anecdote with most votes</h2>
-        <p> {anecdotes[indexOfMax(vote)]}</p>
-        <p1> has {vote[indexOfMax(vote)]} votes.</p1>
+        <p> {anecdotes[vote.indexOf(Math.max(...vote))]}</p>
+        <p1> has {vote[vote.indexOf(Math.max(...vote))]} votes.</p1>
     </div>
   )
 }

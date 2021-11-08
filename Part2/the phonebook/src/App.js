@@ -1,20 +1,62 @@
 import React, { useState } from "react";
 
 const first_persons = [
-  { name: "Arto Hellas", id: 1 },
+  { name: "Arto Hellas", 
+  id: 1 ,
+  number : 12243434
+},
   {
     name: "Nehas",
     id: 2,
+    number : 2222,
   },
   {
     name: "Hardhik",
     id: 3,
+    number : 33333333,
   },
 ];
-
+const Filter = (props) => {
+  return(
+    <div>
+    Filter shown with: <input value ={props.searchval} onChange={props.searchChange}/>
+    </div>
+  )
+}
+const Personform = (props)=>{
+  return(
+    <form onSubmit={props.addName}>
+    <div>
+      Name: <input value={props.newName} onChange={props.NameChange} />
+      </div>
+      <div>
+        Number : <input value={props.newnumber}  onChange={props.NumberChange} />
+    </div>
+    <div>
+      <button type="submit">add</button>
+    </div>
+  </form>
+  )
+}
+const Persons = (props)=>{
+  return(
+    props.persons.filter((val)=>{
+      if (props.search==''){
+        return val
+      }
+      else if (val.name.toLocaleLowerCase().includes(props.search.toLocaleLowerCase())){
+        return val
+      }
+    } ).map((person) => (
+     <li key={person.id}> {person.name} : {person.number}</li> 
+    ))
+  )
+}
 const App = () => {
   const [persons, setPersons] = useState(first_persons);
   const [newName, setNewName] = useState("");
+  const [newnumber,setNewnumber]= useState('')
+  const [search,setSearch]= useState('')
   const addName = (event) => {
     event.preventDefault();
 
@@ -26,10 +68,13 @@ const App = () => {
       const newPerson = {
         name: newName,
         id: persons.length + 1,
+        number: newnumber
       };
       setPersons(persons.concat(newPerson));
     }
     setNewName("");
+    setNewnumber('')
+    
 
     // for (var i =0;i<persons.length;i++)
     // {
@@ -61,22 +106,23 @@ const App = () => {
     //console.log(event.target.value)
     setNewName(event.target.value);
   };
+  const handleNumberChange = (event)=>{
+    setNewnumber(event.target.value)
+  }
+  const handlesearchChange = (event) => {
+    //console.log(event.target.value)
+    setSearch(event.target.value);}
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      <form onSubmit={addName}>
-        <div>
-          Name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {persons.map((person) => (
-        <li key={person.id}> {person.name}</li>
-      ))}
+   <h1>Phonebook</h1>
+      <Filter searchval= {search} searchChange= {handlesearchChange}  />
+   <h2>add a new contact </h2>
+      <Personform addName={addName} newName={newName} NameChange={handleNameChange} 
+                  newnumber={newnumber} NumberChange={handleNumberChange}  />
+   <h3>Numbers</h3>
+      <Persons  persons={persons} search={search}/>
+      
     </div>
   );
 };

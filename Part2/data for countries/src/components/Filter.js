@@ -31,7 +31,7 @@ const Filter = (props) => {
   else {
     return(
       <div>
-        No countries with present filter...
+        No countries with given search...
       </div>
     )
   } 

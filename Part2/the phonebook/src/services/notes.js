@@ -10,8 +10,11 @@ const postData = (addname) => {
     const request = axios.post(baseUrl,addname)
     return request.then(response => response.data)
 }
-
+const deleteName = (id) =>{
+    const request = axios.delete(`${baseUrl}/${id}`)
+    return request.then(response => response.data)
+}
   
 export default {
-    getAll,postData
+    getAll,postData,deleteName  
 }

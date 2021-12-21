@@ -1,14 +1,33 @@
 import React from "react";
 import noteServices from '../services/notes';
 
-const Persons = (props)=>{
-  const clicked = (props)=>{
-    if (window.confirm(`Do you want to delete ${props.persons.name}?`)){
+
+const Button =(props)=>{
+
+  const clicked = (event)=>{
+    event.preventDefault()
+    if (window.confirm(`Do you want to delete ${props.per.name}?`)){
     noteServices
-        .deleteName(props.persons.id)
-      .then(response => response.data)
+        .deleteName(props.per.id)
+      .then(response => 
+        props.setperson(props.persons.filter(p => p.name != props.per.name ))
+      )
     }
   }
+  return(
+      <div>
+        <button onClick={clicked}>delete</button>
+
+      </div>
+
+
+  )
+
+}
+
+
+const Persons = (props)=>{
+  
     return(
       props.persons.filter((val)=>{
         if (props.search===''){
@@ -20,7 +39,7 @@ const Persons = (props)=>{
       } ).map((person) => (
         <div>
        <li key={person.id}> {person.name} : {person.number}</li>
-        <button  onClick={() => clicked}>  delete</button>
+        <Button per={person} setperson={props.setperson} persons={props.persons} />
         </div>
       ))
     )

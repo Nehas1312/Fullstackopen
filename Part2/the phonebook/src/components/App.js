@@ -29,7 +29,20 @@ const App = () => {
     event.preventDefault();
 
     if (persons.findIndex((person) => person.name === newName) !== -1) {
-      window.alert(` ${newName} is aldready added to phonebook`);
+      if (window.confirm(` ${newName} is aldready added to phonebook,replace old number with new number?`)){
+        const editPersonid = (
+          persons.find(person=> person.name === newName)
+        );
+        const editPerson = {
+          name : newName,
+          number : newnumber,
+          id : editPersonid.id
+        }
+        console.log(editPerson)
+        noteServices
+        .editName(editPersonid.id,editPerson)
+        .then(response => {setPersons(persons.map(person => person.id !== editPersonid.id ? person : editPerson))})
+      };
     } else if (newName === "") {
       window.alert(` Name is Empty `);
     } else {

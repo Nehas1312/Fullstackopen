@@ -3,6 +3,8 @@ import Filter from './Filter';
 import Personform from './Personsform';
 import Persons from './Persons';
 import noteServices from '../services/notes'
+import Notification from './css'
+import ErrorNotification from './error'
 
 ;
 
@@ -13,7 +15,9 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newnumber,setNewnumber]= useState('')
   const [search,setSearch]= useState('')
-  
+  const [message,setMessage]= useState(null)
+  const [errormessage,setErrormessage]= useState(null)
+
   useEffect(() => {
     console.log('effect')
     noteServices
@@ -42,9 +46,16 @@ const App = () => {
         noteServices
         .editName(editPersonid.id,editPerson)
         .then(response => {setPersons(persons.map(person => person.id !== editPersonid.id ? person : editPerson))})
+        .catch(error => {
+          setErrormessage(`${newName} is aldready deleted from server`)
+          setTimeout(() => {
+            setErrormessage(null)
+          }, 5000)
+        })
       };
     } else if (newName === "") {
       window.alert(` Name is Empty `);
+      
     } else {
       const newPerson = {
         name: newName,
@@ -56,7 +67,12 @@ const App = () => {
       .then(response =>{
           setPersons(persons.concat(response))
           setNewName('')
-      });
+          setMessage(`${newName} is added!!`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)  
+      })
+      ;
     }
     setNewName("");
     setNewnumber('')
@@ -81,6 +97,8 @@ const App = () => {
   return (
     <div>
    <h1>Phonebook</h1>
+   <Notification message={message}/>
+   <ErrorNotification message={errormessage}/>
       <Filter searchval= {search} searchChange= {handlesearchChange}  />
    <h2>add a new contact </h2>
       <Personform addName={addName} newName={newName} NameChange={handleNameChange} 

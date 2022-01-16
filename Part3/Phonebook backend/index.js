@@ -1,7 +1,17 @@
 const { request, response } = require("express");
 const express = require("express");
+const morgan = require('morgan');
 const app = express();
 app.use(express.json())
+
+morgan.token('type', (request,response) => 
+{
+    if(request.body) return JSON.stringify(request.body)
+    else return null
+})
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :type'))
+
 let persons = [
   {
     id: 1,
@@ -32,6 +42,7 @@ const generateId = () => {
   return maxId + 1
 }
 
+
 app.get("/api/persons", (request, response) => {
   response.json(persons);
 });
@@ -59,6 +70,7 @@ app.get('/api/persons/:id',(request,response)=>{
 
 app.post('/api/persons',(request,response)=>{
   const body = request.body
+  console.log(request.body)
   
   if (persons.findIndex((person) => person.name === body.name) !== -1) {
     return response.status(404).json({
@@ -80,6 +92,8 @@ app.post('/api/persons',(request,response)=>{
   }
   
   persons = persons.concat(person)
+
+  morgan.token()
   response.json(person)
 })
 

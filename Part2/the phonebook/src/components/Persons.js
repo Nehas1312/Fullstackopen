@@ -1,23 +1,23 @@
-import React from "react";
+import React,{useState} from "react";
 import noteServices from '../services/notes';
 
 
 const Button =(props)=>{
-
+  const [dmessage,setDmessage]= useState(null)
   const clicked = (event)=>{
+  
     event.preventDefault()
     if (window.confirm(`Do you want to delete ${props.per.name}?`)){
     noteServices
         .deleteName(props.per.id)
-      .then(response => 
-        props.setperson(props.persons.filter(p => p.name != props.per.name ))
-      )
+      .then(response =>{
+        props.setperson(props.persons.filter(p => p.id !== props.per.id))
+    })
     }
   }
   return(
       <div>
         <button onClick={clicked}>delete</button>
-
       </div>
 
 
